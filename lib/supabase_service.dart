@@ -22,12 +22,19 @@ class SupabaseService {
   static bool get isAuthenticated => currentUser != null;
 
   // Sign up with email and password
-  static Future<AuthResponse> signUp(String email, String password) async {
+  static Future<AuthResponse> signUp(String email, String password, {String? name}) async {
     try {
+      print('SupabaseService: Sign up for $email with name: "$name"');
       final response = await _supabase.auth.signUp(
         email: email,
         password: password,
+        data: name != null ? {'full_name': name} : null,
       );
+      
+      print('SupabaseService: Sign up response - User: ${response.user}, Session: ${response.session}');
+      if (response.user != null) {
+        print('SupabaseService: User metadata: ${response.user!.userMetadata}');
+      }
       
       // Since email confirmation is disabled, user should be automatically signed in
       if (response.user != null && response.session != null) {

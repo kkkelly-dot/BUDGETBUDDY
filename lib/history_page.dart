@@ -38,12 +38,12 @@ class _HistoryPageState extends State<HistoryPage> {
     
     return _allTransactions.where((tx) {
       try {
-        final date = DateTime.tryParse(tx['created_at'].toString());
+      final date = DateTime.tryParse(tx['created_at'].toString());
         if (date == null) return false;
         
         return date.year == _selectedDate!.year &&
-               date.month == _selectedDate!.month &&
-               date.day == _selectedDate!.day;
+          date.month == _selectedDate!.month &&
+          date.day == _selectedDate!.day;
       } catch (e) {
         print('Error parsing date: $e');
         return false;
@@ -54,8 +54,8 @@ class _HistoryPageState extends State<HistoryPage> {
   double get _incomeTotal {
     try {
       return _filteredTransactions
-          .where((tx) => tx['type'] == 'income')
-          .fold(0.0, (sum, tx) => sum + (tx['amount'] as num).toDouble());
+      .where((tx) => tx['type'] == 'income')
+      .fold(0.0, (sum, tx) => sum + (tx['amount'] as num).toDouble());
     } catch (e) {
       print('Error calculating income: $e');
       return 0.0;
@@ -65,8 +65,8 @@ class _HistoryPageState extends State<HistoryPage> {
   double get _expenseTotal {
     try {
       return _filteredTransactions
-          .where((tx) => tx['type'] == 'expense')
-          .fold(0.0, (sum, tx) => sum + (tx['amount'] as num).toDouble());
+      .where((tx) => tx['type'] == 'expense')
+      .fold(0.0, (sum, tx) => sum + (tx['amount'] as num).toDouble());
     } catch (e) {
       print('Error calculating expense: $e');
       return 0.0;
@@ -95,7 +95,7 @@ class _HistoryPageState extends State<HistoryPage> {
     try {
       if (Config.supabaseUrl != 'YOUR_SUPABASE_URL' && 
           Config.supabaseAnonKey != 'YOUR_SUPABASE_ANON_KEY') {
-        await SupabaseService.loadTransactions();
+      await SupabaseService.loadTransactions();
       } else {
         await MockService.init();
       }
@@ -126,14 +126,14 @@ class _HistoryPageState extends State<HistoryPage> {
     });
     
     try {
-      await SupabaseService.loadMoreTransactions();
+    await SupabaseService.loadMoreTransactions();
     } catch (e) {
       print('Error loading more transactions: $e');
     } finally {
-      if (mounted) {
-        setState(() {
-          _isLoadingMore = false;
-        });
+    if (mounted) {
+      setState(() {
+        _isLoadingMore = false;
+      });
       }
     }
   }
@@ -142,8 +142,8 @@ class _HistoryPageState extends State<HistoryPage> {
     try {
       if (Config.supabaseUrl != 'YOUR_SUPABASE_URL' && 
           Config.supabaseAnonKey != 'YOUR_SUPABASE_ANON_KEY') {
-        SupabaseService.resetPagination();
-        await SupabaseService.loadTransactions();
+      SupabaseService.resetPagination();
+      await SupabaseService.loadTransactions();
       } else {
         await MockService.init();
       }
@@ -153,7 +153,7 @@ class _HistoryPageState extends State<HistoryPage> {
       });
     }
     
-    if (mounted) setState(() {});
+      if (mounted) setState(() {});
   }
 
   String _formatDate(dynamic dateValue) {
@@ -428,12 +428,12 @@ class _HistoryPageState extends State<HistoryPage> {
           : _errorMessage != null
               ? _buildErrorState()
               : Column(
-                  children: [
+        children: [
                     // Summary Cards
                     Container(
                       padding: EdgeInsets.all(16),
-                      child: Row(
-                        children: [
+            child: Row(
+              children: [
                           Expanded(child: _SummaryCard(
                             label: 'Income',
                             value: _incomeTotal,
@@ -451,18 +451,18 @@ class _HistoryPageState extends State<HistoryPage> {
                             value: _incomeTotal - _expenseTotal,
                             color: _incomeTotal - _expenseTotal >= 0 ? Colors.blue : Colors.orange,
                           )),
-                        ],
-                      ),
-                    ),
+              ],
+            ),
+          ),
                     
                     // Transactions List
-                    Expanded(
-                      child: _filteredTransactions.isEmpty
+          Expanded(
+            child: _filteredTransactions.isEmpty
                           ? _buildEmptyState()
-                          : RefreshIndicator(
-                              onRefresh: _refreshTransactions,
-                              child: ListView.builder(
-                                controller: _scrollController,
+                : RefreshIndicator(
+                    onRefresh: _refreshTransactions,
+                    child: ListView.builder(
+                      controller: _scrollController,
                                 itemCount: _filteredTransactions.length + 
                                     (SupabaseService.canLoadMore && !_isLoadingMore ? 1 : 0),
                                 itemBuilder: (context, index) {
@@ -475,12 +475,12 @@ class _HistoryPageState extends State<HistoryPage> {
                                     );
                                   }
                                   return _buildTransactionItem(_filteredTransactions[index]);
-                                },
-                              ),
-                            ),
+                      },
                     ),
-                  ],
-                ),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

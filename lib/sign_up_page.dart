@@ -12,6 +12,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -34,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
         child: SafeArea(
-          child: Padding(
+              child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -92,6 +93,33 @@ class _SignUpPageState extends State<SignUpPage> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      // Name Field
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: TextFormField(
+                          controller: _nameController,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            labelStyle: TextStyle(color: Colors.white.withOpacity(0.8)),
+                            prefixIcon: Icon(Icons.person, color: Colors.white.withOpacity(0.8)),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter your name';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      
+                      SizedBox(height: 20),
+                      
                       // Email Field
                       Container(
                         decoration: BoxDecoration(
@@ -99,10 +127,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: TextFormField(
-                          controller: _emailController,
+                        controller: _emailController,
                           style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            labelText: 'Email',
+                        decoration: InputDecoration(
+                          labelText: 'Email',
                             labelStyle: TextStyle(color: Colors.white.withOpacity(0.8)),
                             prefixIcon: Icon(Icons.email, color: Colors.white.withOpacity(0.8)),
                             border: InputBorder.none,
@@ -130,11 +158,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: TextFormField(
-                          controller: _passwordController,
+                        controller: _passwordController,
                           style: TextStyle(color: Colors.white),
                           obscureText: _obscurePassword,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
+                        decoration: InputDecoration(
+                          labelText: 'Password',
                             labelStyle: TextStyle(color: Colors.white.withOpacity(0.8)),
                             prefixIcon: Icon(Icons.lock, color: Colors.white.withOpacity(0.8)),
                             suffixIcon: IconButton(
@@ -197,13 +225,23 @@ class _SignUpPageState extends State<SignUpPage> {
                                     });
                                     
                                     try {
+                                      final name = _nameController.text.trim();
+                                      final email = _emailController.text.trim();
+                                      final password = _passwordController.text;
+                                      
+                                      print('Sign up attempt - Name: "$name", Email: "$email"');
+                                      
                                       final response = await AuthService.signUp(
-                                        _emailController.text.trim(),
-                                        _passwordController.text,
+                                        email,
+                                        password,
+                                        name: name,
                                       );
+                                      
+                                      print('Sign up response - User: ${response.user}, Session: ${response.session}');
                                       
                                       if (response.user != null) {
                                         // Successfully signed up
+                                        print('Sign up successful, calling onSignUpSuccess');
                                         widget.onSignUpSuccess();
                                       } else {
                                         setState(() {
@@ -211,6 +249,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         });
                                       }
                                     } catch (e) {
+                                      print('Sign up error: $e');
                                       setState(() {
                                         _error = _getErrorMessage(e.toString());
                                       });

@@ -113,7 +113,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _buildCurrentScreen() {
-    print('Building current screen: loading=$_loading, getStarted=$_showGetStarted, authenticated=$_isAuthenticated, showSignIn=$_showSignInPage, showSignUp=$_showSignUpPage');
+    print('Building current screen: loading=$_loading, getStarted=$_showGetStarted, authenticated=$_isAuthenticated, showSignIn=$_showSignInPage, showSignUp=$_showSignUpPage, showProfile=$_showProfilePage, showSettings=$_showSettingsPage, showSecurity=$_showSecurityPage, showHelp=$_showHelpPage');
     
     if (_loading) {
       return Scaffold(
@@ -174,6 +174,7 @@ class _MyAppState extends State<MyApp> {
 
     // Show history page if requested
     if (_showHistoryPage) {
+      print('Rendering HistoryPage');
       return HistoryPage(
         onBack: () {
           setState(() {
@@ -185,21 +186,25 @@ class _MyAppState extends State<MyApp> {
 
     // Show profile page if requested
     if (_showProfilePage) {
+      print('Rendering ProfilePage');
       return _buildProfilePage();
     }
 
     // Show settings page if requested
     if (_showSettingsPage) {
+      print('Rendering SettingsPage');
       return _buildSettingsPage();
     }
 
     // Show security page if requested
     if (_showSecurityPage) {
+      print('Rendering SecurityPage');
       return _buildSecurityPage();
     }
 
     // Show help page if requested
     if (_showHelpPage) {
+      print('Rendering HelpPage');
       return _buildHelpPage();
     }
 
@@ -346,7 +351,7 @@ class _MyAppState extends State<MyApp> {
                 
                 // User Info
                 Text(
-                  'BudgetBuddy User',
+                  AuthService.userDisplayName,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -372,11 +377,15 @@ class _MyAppState extends State<MyApp> {
                   title: 'Settings',
                   subtitle: 'App preferences and configuration',
                   onTap: () {
+                    print('Settings button tapped. _isAuthenticated: $_isAuthenticated');
                     if (_isAuthenticated) {
+                      print('Setting _showSettingsPage to true');
                       setState(() {
                         _showSettingsPage = true;
                       });
+                      print('_showSettingsPage set to true');
                     } else {
+                      print('User not authenticated, showing snackbar');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Please sign in to access settings')),
                       );
@@ -391,11 +400,15 @@ class _MyAppState extends State<MyApp> {
                   title: 'Security',
                   subtitle: 'Password and account security',
                   onTap: () {
+                    print('Security button tapped. _isAuthenticated: $_isAuthenticated');
                     if (_isAuthenticated) {
+                      print('Setting _showSecurityPage to true');
                       setState(() {
                         _showSecurityPage = true;
                       });
+                      print('_showSecurityPage set to true');
                     } else {
+                      print('User not authenticated, showing snackbar');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Please sign in to access security settings')),
                       );
@@ -410,11 +423,15 @@ class _MyAppState extends State<MyApp> {
                   title: 'Help & Support',
                   subtitle: 'Get help and contact support',
                   onTap: () {
+                    print('Help button tapped. _isAuthenticated: $_isAuthenticated');
                     if (_isAuthenticated) {
+                      print('Setting _showHelpPage to true');
                       setState(() {
                         _showHelpPage = true;
                       });
+                      print('_showHelpPage set to true');
                     } else {
+                      print('User not authenticated, showing snackbar');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Please sign in to access help & support')),
                       );
