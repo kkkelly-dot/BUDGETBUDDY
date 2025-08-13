@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'supabase_service.dart';
 import 'mock_service.dart';

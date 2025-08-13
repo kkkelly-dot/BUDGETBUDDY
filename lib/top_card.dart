@@ -43,7 +43,7 @@ class TopNeuCard extends StatelessWidget {
                           child: Center(
                             child: Icon(
                               Icons.arrow_upward,
-                              color: Colors.green,
+                              color: Colors.blue,
                             ),
                           ),
                         ),

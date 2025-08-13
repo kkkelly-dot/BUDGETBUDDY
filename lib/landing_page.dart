@@ -21,14 +21,14 @@ class LandingPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // App Logo (replace with your own if available)
-              Icon(Icons.account_balance_wallet, size: 80, color: Colors.green[700]),
+              Icon(Icons.account_balance_wallet, size: 80, color: Colors.blue[700]),
               SizedBox(height: 24),
               Text(
                 'BudgetBuddy',
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green[800],
+                  color: Colors.blue[800],
                 ),
               ),
               SizedBox(height: 12),
@@ -41,7 +41,7 @@ class LandingPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: onSignIn,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
+                  backgroundColor: Colors.blue[700],
                   minimumSize: Size(double.infinity, 48),
                 ),
                 child: Text('Sign In', style: TextStyle(fontSize: 18)),
@@ -51,9 +51,9 @@ class LandingPage extends StatelessWidget {
                 onPressed: onSignUp,
                 style: OutlinedButton.styleFrom(
                   minimumSize: Size(double.infinity, 48),
-                  side: BorderSide(color: Colors.green[700]!),
+                  side: BorderSide(color: Colors.blue[700]!),
                 ),
-                child: Text('Sign Up', style: TextStyle(fontSize: 18, color: Colors.green[700])),
+                child: Text('Sign Up', style: TextStyle(fontSize: 18, color: Colors.blue[700])),
               ),
             ],
           ),

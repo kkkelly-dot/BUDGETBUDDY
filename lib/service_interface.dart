@@ -1,12 +1,12 @@
 abstract class DataService {
-  static int numberOfTransactions = 0;
-  static List<Map<String, dynamic>> currentTransactions = [];
-  static bool loading = true;
+  int get numberOfTransactions;
+  List<Map<String, dynamic>> get currentTransactions;
+  bool get loading;
 
-  static Future<void> init();
-  static Future<void> loadTransactions();
-  static Future<void> insert(String name, String amount, bool isIncome);
-  static double calculateIncome();
-  static double calculateExpense();
-  static Future<void> deleteTransaction(String id);
+  Future<void> init();
+  Future<void> loadTransactions();
+  Future<void> insert(String name, String amount, bool isIncome);
+  double calculateIncome();
+  double calculateExpense();
+  Future<void> deleteTransaction(String id);
 } 

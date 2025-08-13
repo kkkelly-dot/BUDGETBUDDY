@@ -64,7 +64,7 @@ class MyTransaction extends StatelessWidget {
                       fontSize: 16,
                       color: expenseOrIncome == 'expense'
                           ? Colors.red
-                          : Colors.green,
+                          : Colors.blue,
                     ),
                   ),
                   SizedBox(width: 10),
